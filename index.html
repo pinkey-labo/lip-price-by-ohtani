@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>料金シミュレーター</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400&family=Noto+Sans+JP:wght@300;400;500;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="simulator.css">
+</head>
+
+<body>
+  <div class="card">
+
+    <div class="hd">
+      <div class="hd-eye">Price Simulator</div>
+      <h1>料金シミュレーター</h1>
+      <p>気になるメニューを順番に選ぶと、目安の料金が表示されます。</p>
+    </div>
+
+    <div class="bd">
+
+      <!-- STEP 1 -->
+      <div class="step active" id="s1">
+        <div class="step-line"></div>
+        <div class="step-head">
+          <div class="step-num">1</div>
+          <div>
+            <div class="step-label">施術メニューを選ぶ</div>
+            <div class="step-sub">色入れ・くすみ除去・シミ除去</div>
+          </div>
+        </div>
+        <div class="step-body">
+          <div class="sel-wrap">
+            <select id="cat">
+              <option value="">選択してください</option>
+              <option value="color">💋 色入れ（リップアートメイク）</option>
+              <option value="kusumi">✨ くすみ薬剤除去</option>
+              <option value="shimi">🔆 シミ除去</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="step" id="s2">
+        <div class="step-line"></div>
+        <div class="step-head">
+          <div class="step-num">2</div>
+          <div>
+            <div class="step-label" id="s2-label">詳細を選ぶ</div>
+            <div class="step-sub" id="s2-sub">STEP 1 を選択してください</div>
+          </div>
+        </div>
+        <div class="step-body">
+
+          <!-- 色入れ：SNS掲載 -->
+          <div class="sel-wrap sub-row" id="row-color-sns">
+            <select id="color-sns">
+              <option value="">SNS掲載を選択</option>
+              <option value="zengan">📸 全顔SNS掲載</option>
+              <option value="kuchi">📸 口元のみSNS掲載</option>
+              <option value="nashi">🚫 SNS掲載なし</option>
+            </select>
+          </div>
+
+          <!-- 色入れ：口元のみ → 回数 -->
+          <div class="sel-wrap sub-row" id="row-color-kaisu">
+            <select id="color-kaisu">
+              <option value="">回数・経験を選択</option>
+              <option value="shokai">初回</option>
+              <option value="2nd-3m">2回目（当院・3ヶ月以内）</option>
+              <option value="2nd-4m">2回目（当院・4ヶ月目以降）</option>
+              <option value="other">他院経験者</option>
+            </select>
+          </div>
+
+          <!-- くすみ薬剤除去：SNS掲載 -->
+          <div class="sel-wrap sub-row" id="row-kusumi">
+            <select id="kusumi-sns">
+              <option value="">SNS掲載を選択</option>
+              <option value="kuchi">📸 口元のみSNS掲載</option>
+              <option value="nashi">🚫 SNS掲載なし</option>
+            </select>
+          </div>
+
+          <!-- シミ除去：パターン -->
+          <div class="sel-wrap sub-row" id="row-shimi">
+            <select id="shimi-type">
+              <option value="">施術パターンを選択</option>
+              <option value="set">色入れと同日セット</option>
+              <option value="solo">シミ除去のみ</option>
+            </select>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- alerts -->
+      <div class="alerts">
+        <div class="alert a-danger" id="al-no-sameday">
+          <span class="alert-ico">⚠️</span>
+          <span>くすみ薬剤除去は、リップアートメイクの色入れと<strong>同日施術できません</strong>。色入れまでは2ヶ月以上空ける必要があります。</span>
+        </div>
+        <div class="alert a-ok" id="al-sameday">
+          <span class="alert-ico">✅</span>
+          <span>色入れと同日のセット施術が可能です。</span>
+        </div>
+        <div class="alert a-gold" id="al-sns">
+          <span class="alert-ico">📸</span>
+          <span>SNS掲載モニタープランのため、<strong>施術写真のSNS掲載</strong>にご協力いただく条件があります。詳細はカウンセリング時にご確認ください。</span>
+        </div>
+      </div>
+
+      <!-- total -->
+      <div class="total-card">
+        <div>
+          <div class="total-label">目安合計金額</div>
+          <div class="total-note">税込・カウンセリングで変更の場合あり</div>
+        </div>
+        <div class="total-amt" id="total">¥ —</div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- LINE -->
+      <div class="line-sec">
+        <p class="line-hint">ご不明な点はLINEでお気軽にご相談ください。<br>カウンセリングのご予約もLINEから承っております。</p>
+        <a href="https://line.me/R/ti/p/@osaka_lip_artmake" class="line-btn" target="_blank" rel="noopener">
+          <svg class="line-ico" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M22 6C13.163 6 6 12.373 6 20.2c0 4.48 2.37 8.483 6.09 11.12-.24.9-.87 3.25-.995 3.755-.155.617.23.608.48.44.198-.132 3.16-2.09 4.44-2.933.97.144 1.97.218 2.985.218 8.837 0 16-6.373 16-14.2C36 12.373 28.837 6 22 6Z"
+              fill="white" />
+            <path
+              d="M15.5 23.5h-2v-5.2h2v5.2Zm4.4 0h-2v-3.15l-2.2 3.15H14v-5.2h2v3.15l2.2-3.15H19.9v5.2Zm2.1 0v-5.2h3.9v1.46h-1.9v.7h1.9v1.46h-1.9v.66h1.9v1.48H22Zm5.85 0h-2v-5.2h2v3.74h1.95v1.46h-1.95Z"
+              fill="#00B900" />
+          </svg>
+          LINE で無料相談する
+        </a>
+      </div>
+
+    </div>
+
+    <div class="ft">
+      <p class="note">
+        ※ 表示価格は目安です。唇の状態により、当日のカウンセリングで適応メニューが変更となる場合があります。<br>
+        ※ くすみ薬剤除去と色入れは同日施術できません。除去後は2ヶ月以上空ける必要があります。
+      </p>
+    </div>
+
+  </div>
+  <script src="simulator.js"></script>
+</body>
+
+</html>

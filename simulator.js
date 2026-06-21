@@ -56,7 +56,15 @@ function syncStepStyle() {
   s1.classList.toggle('active', !has);
   s1.classList.toggle('done',    has);
   s2.classList.toggle('active',  has);
+  // STEP1選択直後だけpulse → STEP2操作したら止める
+  if (has) {
+    s2.classList.add('pulse');
+  } else {
+    s2.classList.remove('pulse');
+  }
 }
+
+function stopPulse() { s2.classList.remove('pulse'); }
 
 // ── events ──
 catSel.addEventListener('change', () => {
@@ -83,6 +91,7 @@ catSel.addEventListener('change', () => {
 });
 
 colorSns.addEventListener('change', () => {
+  stopPulse();
   const v = colorSns.value;
   rowColorKaisu.classList.remove('open');
   colorKaisu.value = '';
@@ -100,12 +109,14 @@ colorSns.addEventListener('change', () => {
 });
 
 colorKaisu.addEventListener('change', () => {
+  stopPulse();
   const v = colorKaisu.value;
   if (!v) { bumpTotal(null); return; }
   bumpTotal(P.color.kuchi[v]);
 });
 
 kusumiSns.addEventListener('change', () => {
+  stopPulse();
   const v = kusumiSns.value;
   resetAlerts();
   setAlert(alNoSameday, true);
@@ -115,6 +126,7 @@ kusumiSns.addEventListener('change', () => {
 });
 
 shimiType.addEventListener('change', () => {
+  stopPulse();
   const v = shimiType.value;
   resetAlerts();
   if (!v) { bumpTotal(null); return; }
